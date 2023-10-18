@@ -1,0 +1,47 @@
+<app-header [isModal]="true" title="Agregar Producto"></app-header>
+
+<ion-content>
+    <form [formGroup]="form" class="ion-text-center" (ngSubmit)="submit()" (keypress.enter)="submit()">
+       
+
+        <!-- si existe foto muestrala -->
+        <ion-avatar *ngIf="form.value.image">
+            <img [src]="form.value.image" />
+        </ion-avatar>
+
+        <!-- si no existe foto, muestra un avatar -->
+        <ion-icon class="image-icon" name="image-outline" *ngIf="!form.value.image"></ion-icon>
+        <br>
+        <!-- toma foto -->
+        <ion-button (click)="takeImage()" mode="ios" size="small" shape="round">
+            Tomar/Seleccionar
+            <ion-icon slot="end" name="camera-outline"></ion-icon>
+        </ion-button>
+
+        <!-- nombre -->
+        <app-custom-input autocomplete="name" icon="text-outline" [control]="form.controls.name" type="text"
+            label="Categoria">
+        </app-custom-input>
+        <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.touched ">
+            <div *ngIf="form.controls.name.errors?.['required']">Ingrese un nombre valido</div>
+            <div *ngIf="form.controls.name.errors?.['minLenght']">El nombre debe tener mas de 4 caracteres</div>
+        </div>
+
+        <!-- descripcion -->
+        <app-custom-input icon="reader-outline" [control]="form.controls.descripcion" type="text" label="Descripcion">
+        </app-custom-input>
+        <div class="validators" *ngIf="form.controls.descripcion.errors && form.controls.descripcion.touched ">
+            <div *ngIf="form.controls.descripcion.errors?.['required']">Ingrese una descripcion</div>
+            <div *ngIf="form.controls.descripcion.errors?.['minLenght']">La descripcion debe tener mas de 8 caracteres
+            </div>
+        </div>
+
+
+
+        <ion-button mode="ios" class="ion-margin" type="submit" [disabled]="form.invalid">
+            Enviar Formulario
+            <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+        </ion-button>
+
+    </form>
+</ion-content>
